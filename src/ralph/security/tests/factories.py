@@ -5,7 +5,7 @@ import factory
 from factory.django import DjangoModelFactory
 
 from ralph.assets.tests.factories import BaseObjectFactory
-from ralph.security.models import Risk, ScanStatus, SecurityScan, Vulnerability
+from ralph.security.models import Risk, VulnerabilityType, ScanStatus, SecurityScan, Vulnerability
 
 
 class SecurityScanFactory(DjangoModelFactory):
@@ -47,6 +47,7 @@ class VulnerabilityFactory(DjangoModelFactory):
     )
     risk = Risk.low
     external_vulnerability_id = factory.Sequence(lambda n: n)
+    vulnerability_type = VulnerabilityType.a6_security_misconfiguration
 
     class Meta:
         model = Vulnerability

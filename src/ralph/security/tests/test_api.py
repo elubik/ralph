@@ -6,7 +6,7 @@ from rest_framework import status
 
 from ralph.api.tests._base import RalphAPITestCase
 from ralph.networks.tests.factories import IPAddressFactory
-from ralph.security.models import Risk, ScanStatus, SecurityScan, Vulnerability
+from ralph.security.models import Risk, VulnerabilityType, ScanStatus, SecurityScan, Vulnerability
 from ralph.security.tests.factories import (
     SecurityScanFactory,
     VulnerabilityFactory
@@ -258,6 +258,16 @@ class VulnerabilityAPITests(RalphAPITestCase):
             response.data['external_vulnerability_id'],
             self.vulnerability.external_vulnerability_id,
         )
+
+    def test_get_vulnerability_details_vulnerability_type(self):
+        # this extra unit test is just to reflect new field in a model
+        # to be moved as an extension of test_get_vulnerability_details()
+        url = reverse('vulnerability-detail', args=(self.vulnerability.id,))
+        response = self.client.get(url, format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        self.assertEqual(
+            response.data['vulnerability_type'], VulnerabilityType.a6_security_misconfiguration.__str__())
 
     def test_create_vulnerability(self):
         url = reverse('vulnerability-list')
