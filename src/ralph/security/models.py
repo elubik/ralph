@@ -34,6 +34,21 @@ class Risk(Choices):
     high = _("high")
 
 
+class VulnerabilityType(Choices):
+    _ = Choices.Choice
+
+    a1_injection = _("A1 – Injection ")
+    a2_broken_authentication = _("A2 – Broken Authentication")
+    a3_sensitive_data_exposure = _("A3 – Sensitive Data Exposure")
+    a4_xml_external_entities = _("A4 – XML External Entites")
+    a5_broken_access_control = _("A5 – Broken Access Control")
+    a6_security_misconfiguration = _("A6 – Security Misconfiguration")
+    a7_cross_site_scripting = _("A7 – Cross-Site Scripting")
+    a8_insecure_deserialization = _("A8 – Insecure Deserialization")
+    a9_components_with_known_vulnerabities = _("A9 – Using Components with Known Vulnerabilities")
+    a10_insufficient_logging = _("A10 – Insufficient Logging & Monitoring")
+
+
 class Vulnerability(
     AdminAbsoluteUrlMixin,
     PermByFieldMixin,
@@ -54,6 +69,7 @@ class Vulnerability(
     )
     patch_deadline = models.DateTimeField(null=True, blank=True)
     risk = models.PositiveIntegerField(choices=Risk(), null=True, blank=True)
+    vulnerability_type = models.PositiveIntegerField(choices=VulnerabilityType(), null=True, blank=True)
     external_vulnerability_id = models.IntegerField(
         unique=True,  # id means id
         null=True,

@@ -23,6 +23,7 @@ class VulnerabilityViewSet(RalphAPIViewSet):
     serializer_class = VulnerabilitySerializer
     filter_fields = [
         'external_vulnerability_id',
+        'vulnerability_type'
     ]
 
 
